@@ -59,7 +59,19 @@ if ($classeSelecionada) {
 
 <!DOCTYPE html>
 <html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Táxi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Adicione esta linha -->
+
+<body>
+ 
+    <!-- O restante do seu código HTML -->
+</body>
     <title>Agendamento de Táxi</title>
     <script>
         function validateForm() {
@@ -132,9 +144,11 @@ if ($classeSelecionada) {
     <h2>Lista de Agendamentos</h2>
     <?php
     // Exibir agendamentos existentes
-    $sql = "SELECT agendamento.ID_Agendamento, cliente.Nome, agendamento.Data_Agendamento 
+    $sql = "SELECT agendamento.ID_Agendamento, cliente.Nome AS Cliente, taxi.Modelo AS Taxi, taxi.Placa, taxista.Nome AS Taxista, agendamento.Data_Agendamento 
             FROM agendamento 
-            JOIN cliente ON agendamento.ID_Cliente = cliente.ID_Cliente";
+            JOIN cliente ON agendamento.ID_Cliente = cliente.ID_Cliente 
+            JOIN taxi ON agendamento.ID_Taxi = taxi.ID_Taxi 
+            JOIN taxista ON taxi.ID_Taxista = taxista.ID_Taxista"; // Ajustar a consulta para incluir os dados do táxi e do taxista
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {
@@ -142,15 +156,19 @@ if ($classeSelecionada) {
                 <tr>
                     <th>ID</th>
                     <th>Cliente</th>
+                    <th>Taxi</th>
+                    <th>Placa</th>
+                    <th>Taxista</th>
                     <th>Data</th>
-                    <th>Ações</th>
                 </tr>";
         while($row = $result->fetch_assoc()) {
             echo "<tr>
                     <td>" . $row["ID_Agendamento"]. "</td>
-                    <td>" . $row["Nome"]. "</td>
+                    <td>" . $row["Cliente"]. "</td>
+                    <td>" . $row["Taxi"]. "</td>
+                    <td>" . $row["Placa"]. "</td>
+                    <td>" . $row["Taxista"]. "</td>
                     <td>" . $row["Data_Agendamento"]. "</td>
-                    <td><a href='editar.php?id=" . $row["ID_Agendamento"]. "'>Editar</a> | <a href='deletar.php?id=" . $row["ID_Agendamento"]. "'>Deletar</a></td>
                   </tr>";
         }
         echo "</table>";
