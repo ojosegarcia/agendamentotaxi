@@ -1,4 +1,4 @@
-Aqui está o README formatado em Markdown para facilitar a leitura e organização:
+
 
 ```markdown
 # Sistema de Listagem de Táxis 🚖
